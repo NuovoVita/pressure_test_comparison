@@ -1,0 +1,9 @@
+{% include "layout.html" %}
+
+<body>
+{% block content %}
+    {% for i in range %}
+        {{ messages }}
+    {% endfor %}
+{% endblock %}
+</body>
