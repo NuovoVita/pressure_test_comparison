@@ -10,12 +10,23 @@ source venv/bin/activate
 pip install -r requirements.txt -i https://pypi.douban.com/simple
 ```
 
-## 1. Flask启动压测
+## 1. Flask 阻塞和非阻塞
 
 ```bash
+# Flask 压测
 python demo.py
-
 ab -n 500 -c 500 http://localhost:5000/
+
+# 1. 纯 Flask 是非阻塞的，可实现并发
+python pure_flask_non_blocking.py
+
+# 2. gevent 是阻塞的
+python wsgi_flask_blocking.py
+
+# 3. gevent 程序中增加 monkey，实现非阻塞。（备注：monkey将标准socket模块中的函数与类替换为对用的功能项,这样即使不清楚gevent结构,也可从多个greenlet运行环境中受益.）
+python wsgi_flask_non_blocking.py
+
+
 ```
 
 ## 2. gunicorn启动压测
@@ -65,10 +76,10 @@ python pure_tornado.py
 
 ## 5. 建议
 
-IO 受限 -建议使用gevent或者asyncio
-CPU受限 -建议增加workers数量
-不确定内存占用? -建议使用gthread
-不知道怎么选择？ -建议增加workers数量
+1. IO 密集型场景 - 建议使用gevent或者asyncio
+2. CPU 密集型场景 - 建议增加workers数量
+3. 不确定内存占用? - 建议使用gthread
+4. 不知道怎么选择？ - 建议增加workers数量
 
 ## 参考
 
@@ -76,3 +87,4 @@ CPU受限 -建议增加workers数量
 - [Gunicorn介绍](https://zhuanlan.zhihu.com/p/102716258)
 - [gevent.WSGISERVER](https://zhuanlan.zhihu.com/p/131364462)
 - [python-web-test](https://github.com/AngelLiang/python-web-test)
+- [Flask框架及阻塞和非阻塞特性](https://blog.csdn.net/Xin_101/article/details/86663627)
