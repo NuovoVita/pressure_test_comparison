@@ -7,7 +7,7 @@ Python >= 3.8
 ```bash
 python3 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt -i https://pypi.douban.com/simple
+pip install -r requirements-dev.txt -i https://pypi.douban.com/simple
 ```
 
 ## 1. Flask 阻塞和非阻塞
@@ -25,8 +25,6 @@ python wsgi_flask_blocking.py
 
 # 3. gevent 程序中增加 monkey，实现非阻塞。（备注：monkey将标准socket模块中的函数与类替换为对用的功能项,这样即使不清楚gevent结构,也可从多个greenlet运行环境中受益.）
 python wsgi_flask_non_blocking.py
-
-
 ```
 
 ## 2. gunicorn启动压测
